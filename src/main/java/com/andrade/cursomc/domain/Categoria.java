@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +20,8 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	@ManyToMany(mappedBy = "categorias")
+
+	@ManyToMany(mappedBy = "categorias", fetch = FetchType.EAGER)
 	private List<Produto> produtos = new ArrayList<>();
 
 	public Categoria() {
@@ -45,7 +47,7 @@ public class Categoria implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	
 	public List<Produto> getProdutos() {
 		return produtos;
 	}

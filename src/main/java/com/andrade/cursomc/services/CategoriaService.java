@@ -1,12 +1,11 @@
 package com.andrade.cursomc.services;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.andrade.cursomc.domain.Categoria;
 import com.andrade.cursomc.repositories.CategoriaRepository;
+import com.andrade.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -19,7 +18,8 @@ public class CategoriaService {
 	}
 
 	public Categoria buscar(Integer id) {
-		Optional<Categoria> obj = repo.findById(id);
-		return obj.orElse(null);
+		Categoria obj = repo.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
+		return obj;
 	}
 }
